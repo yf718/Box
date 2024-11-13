@@ -25,10 +25,13 @@ public class PushDialog extends BaseDialog {
 
     private EditText etAddr;
     private EditText etPort;
+    private EditText etName;
     private TextView etCurrent;
+    private String movieName;
 
-    public PushDialog(@NonNull @NotNull Context context) {
+    public PushDialog(@NonNull @NotNull Context context, String movieName) {
         super(context);
+        this.movieName = movieName;
         setContentView(R.layout.dialog_push);
     }
 
@@ -41,6 +44,7 @@ public class PushDialog extends BaseDialog {
         // Push IP / Port
         etAddr = findViewById(R.id.etAddr);
         etPort = findViewById(R.id.etPort);
+        etName = findViewById(R.id.etName);
         String cfgAddr = Hawk.get(HawkConfig.PUSH_TO_ADDR, "");
         String cfgPort = Hawk.get(HawkConfig.PUSH_TO_PORT, "");
 
@@ -61,6 +65,7 @@ public class PushDialog extends BaseDialog {
         // Get Current IP
         String currIP = getCurrentIP();
         etCurrent.setText(currIP);
+        etName.setText(movieName);
 
         findViewById(R.id.btnConfirm).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,6 +85,7 @@ public class PushDialog extends BaseDialog {
                 List<String> list = new ArrayList<>();
                 list.add(addr);
                 list.add(port);
+                list.add(etName.getText() == null ? "无标题" : etName.getText().toString());
                 EventBus.getDefault().post(new RefreshEvent(RefreshEvent.TYPE_PUSH_VOD, list));
                 PushDialog.this.dismiss();
             }
