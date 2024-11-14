@@ -962,11 +962,12 @@ public class DetailActivity extends BaseActivity {
 
                             @Override
                             public void onSuccess(Response<String> response) {
-                                String r = response.body();
+                                /*String r = response.body();
                                 if ("mirrored".equals(r))
                                     Toast.makeText(DetailActivity.this, "推送成功", Toast.LENGTH_SHORT).show();
                                 else
-                                    Toast.makeText(DetailActivity.this, "推送失败，远端tvbox版本不支持", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(DetailActivity.this, "推送失败，远端tvbox版本不支持", Toast.LENGTH_SHORT).show();*/
+                                Toast.makeText(DetailActivity.this, "推送成功!", Toast.LENGTH_SHORT).show();
                             }
 
                             @Override
