@@ -18,7 +18,7 @@ jobs:
       - name: Build With Gradle
         run: |
           chmod +x gradlew
-          ./gradlew assemblerelease -Xlint:unchecked --warning-mode all
+          ./gradlew assemblerelease --warning-mode all
       - name: Prepare App
         run: |
           mkdir -p ${{ github.workspace }}/apk/
