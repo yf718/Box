@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.net.Uri;
 import android.text.TextUtils;
 import android.util.Base64;
+import android.util.Log;
 
 import com.github.catvod.crawler.JarLoader;
 import com.github.catvod.crawler.JsLoader;
@@ -76,8 +77,6 @@ public class ApiConfig {
     private final String userAgent = "okhttp/3.15";
 
     private final String requestAccept = "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9";
-
-    private static final Logger LOG = LoggerFactory.getLogger(ApiConfig.class);
     
     private ApiConfig() {
         sourceBeanList = new LinkedHashMap<>();
