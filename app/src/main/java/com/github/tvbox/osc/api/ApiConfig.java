@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.net.Uri;
 import android.text.TextUtils;
 import android.util.Base64;
+import android.util.Log;
 
 import com.github.catvod.crawler.JarLoader;
 import com.github.catvod.crawler.JsLoader;
