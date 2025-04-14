@@ -728,6 +728,7 @@ public class SourceViewModel extends ViewModel {
                 result = new JSONObject(json);
             }
             if (result != null) {
+                Hawk.put(HawkConfig.CURRENT_PLAY_URL, result.getString("url"));
                 result.put("key", url);
                 result.put("proKey", progressKey);
                 result.put("subtKey", subtitleKey);

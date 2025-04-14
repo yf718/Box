@@ -44,7 +44,6 @@ import com.github.tvbox.osc.bean.VodInfo;
 import com.github.tvbox.osc.bean.VodSeriesGroup;
 import com.github.tvbox.osc.cache.RoomDataManger;
 import com.github.tvbox.osc.event.RefreshEvent;
-import com.github.tvbox.osc.player.controller.VodController;
 import com.github.tvbox.osc.server.PlayService;
 import com.github.tvbox.osc.ui.adapter.SeriesAdapter;
 import com.github.tvbox.osc.ui.adapter.SeriesFlagAdapter;
@@ -307,7 +306,7 @@ public class DetailActivity extends BaseActivity {
         tvPush.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PushDialog pushDialog = new PushDialog(mContext);
+                PushDialog pushDialog = new PushDialog(mContext, vodInfo.name + vodInfo.playNote);
                 pushDialog.show();
             }
         });
@@ -508,8 +507,8 @@ public class DetailActivity extends BaseActivity {
                         reload = true;
                     }
                     //选集全屏 想选集不全屏的注释下面一行
-                    if (showPreview && !fullWindows && playFragment.getPlayer().isPlaying())
-                        toggleFullPreview();
+//                    if (showPreview && !fullWindows && playFragment.getPlayer().isPlaying())
+//                        toggleFullPreview();
                     if (reload || !showPreview) jumpToPlay();
                 }
             }
@@ -934,11 +933,22 @@ public class DetailActivity extends BaseActivity {
             if (event.obj != null) {
                 List<String> data = (List<String>) event.obj;
                 OkGo.getInstance().cancelTag("pushVod");
-                OkGo.<String>post("http://" + data.get(0) + ":" + data.get(1) + "/action")
+                JSONObject object = new JSONObject();
+                String currentUrl = Hawk.get(HawkConfig.CURRENT_PLAY_URL, "");
+                if (StringUtils.isBlank(currentUrl)) {
+                    Toast.makeText(DetailActivity.this, "地址获取失败", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                try {
+                    object.put("name", data.get(2));
+                    object.put("url", currentUrl);
+                } catch (Exception e) {
+                    Toast.makeText(DetailActivity.this, "地址获取失败", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                OkGo.<String>post("http://" + data.get(0) + ":" + data.get(1) + "/add")
                         .tag("pushVod")
-                        .params("id", vodId)
-                        .params("sourceKey", sourceKey)
-                        .params("do", "mirror")
+                        .upJson(object)
                         .execute(new AbsCallback<String>() {
                             @Override
                             public String convertResponse(okhttp3.Response response) throws Throwable {
@@ -952,11 +962,12 @@ public class DetailActivity extends BaseActivity {
 
                             @Override
                             public void onSuccess(Response<String> response) {
-                                String r = response.body();
+                                /*String r = response.body();
                                 if ("mirrored".equals(r))
                                     Toast.makeText(DetailActivity.this, "推送成功", Toast.LENGTH_SHORT).show();
                                 else
-                                    Toast.makeText(DetailActivity.this, "推送失败，远端tvbox版本不支持", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(DetailActivity.this, "推送失败，远端tvbox版本不支持", Toast.LENGTH_SHORT).show();*/
+                                Toast.makeText(DetailActivity.this, "推送成功!", Toast.LENGTH_SHORT).show();
                             }
 
                             @Override
