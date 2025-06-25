@@ -942,6 +942,7 @@ public class DetailActivity extends BaseActivity {
                 try {
                     object.put("name", data.get(2));
                     object.put("url", currentUrl);
+                    object.put("header", Hawk.get(HawkConfig.CURRENT_PLAY_HEAD, ""));
                 } catch (Exception e) {
                     Toast.makeText(DetailActivity.this, "地址获取失败", Toast.LENGTH_SHORT).show();
                     return;

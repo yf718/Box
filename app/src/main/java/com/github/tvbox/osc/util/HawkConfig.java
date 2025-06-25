@@ -80,4 +80,5 @@ public class HawkConfig {
 
     public static final String SEARCH_RESULT_WIDTH = "search_result_width"; // 搜索结果view宽度
     public static final String CURRENT_PLAY_URL = "current_play_url";
+    public static final String CURRENT_PLAY_HEAD = "current_play_head";
 }

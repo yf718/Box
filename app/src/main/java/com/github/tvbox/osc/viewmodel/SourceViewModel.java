@@ -729,6 +729,7 @@ public class SourceViewModel extends ViewModel {
             }
             if (result != null) {
                 Hawk.put(HawkConfig.CURRENT_PLAY_URL, result.getString("url"));
+                Hawk.put(HawkConfig.CURRENT_PLAY_HEAD, result.getString("header"));
                 result.put("key", url);
                 result.put("proKey", progressKey);
                 result.put("subtKey", subtitleKey);
